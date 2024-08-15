@@ -5,12 +5,6 @@ public class pictSettings {
     private Styles style;
     private String negativePrompt;
 
-    public pictSettings(String prompt, Styles style, String negativePrompt) {
-        this.prompt = prompt;
-        this.style = style;
-        this.negativePrompt = negativePrompt;
-    }
-
     public pictSettings() {
         this.prompt = "пусто";
         this.style = Styles.DEFAULT;

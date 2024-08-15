@@ -13,10 +13,7 @@ import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.InputFile;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -47,13 +44,14 @@ public class Text2ImageAPI {
         return data.get(0).getAsJsonObject().get("id").getAsString();
     }
 
-    public String generate(String prompt, String model, int images, int width, int height, Styles style) throws IOException {
+    public String generate(String prompt, String model, int images, int width, int height, Styles style, String negativePromptUnclip ) throws IOException {
         Map<String, Object> params = new HashMap<>();
         params.put("type", "GENERATE");
         params.put("numImages", images);
         params.put("width", width);
         params.put("height", height);
         params.put("style", style);
+        params.put("negativePromptUnclip", negativePromptUnclip);
         Map<String, Object> generateParams = new HashMap<>();
         generateParams.put("query", prompt);
         params.put("generateParams", generateParams);
@@ -96,9 +94,9 @@ public class Text2ImageAPI {
         return null;
     }
 
-    public byte[] generatePicture(String promt, Styles style) throws IOException, InterruptedException {
+    public byte[] generatePicture(String promt, Styles style, String negativePrompt ) throws IOException, InterruptedException {
         String modelId = this.getModel();
-        String uuid = this.generate(promt, modelId, 1, 512, 512, style);
+        String uuid = this.generate(promt, modelId, 1, 512, 512, style, negativePrompt);
         String[] images = this.checkGeneration(uuid, 10, 10);
         String imageBase64 = images[0];
         return Base64.getDecoder().decode(imageBase64);

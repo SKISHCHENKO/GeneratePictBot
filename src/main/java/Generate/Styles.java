@@ -4,5 +4,5 @@ public enum Styles {
     KANDINSKY,
     UHD,
     ANIME,
-    DEFAULT;
+    DEFAULT
 }
